@@ -964,6 +964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactibleObject: {fileID: 0}
   interactObjectBehavior: {fileID: 1526837238}
+  mouseActive: 1
 --- !u!1 &1176562967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,6 +1298,7 @@ MonoBehaviour:
   - {fileID: 2124952510}
   - {fileID: 1405981516}
   cubeIHold: {fileID: 0}
+  rayCastMainCamera: {fileID: 963194229}
 --- !u!4 &1526837239
 Transform:
   m_ObjectHideFlags: 0

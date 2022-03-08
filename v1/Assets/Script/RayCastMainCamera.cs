@@ -10,12 +10,13 @@ public class RayCastMainCamera : MonoBehaviour
     bool hasHit;
     public GameObject interactibleObject;
     public InteractObjectBehavior interactObjectBehavior;
+    public bool mouseActive = true;
 
     void Update()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         hasHit = Physics.Raycast(ray, out hit);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && mouseActive)
         {
             if (hasHit)
             {
