@@ -1,5 +1,9 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/placeHolderTest.unity
+=======
+- path: Assets/Scenes 1/New Scene.unity
+>>>>>>> main
   isLoaded: 1
   isActive: 1
   isSubScene: 0
