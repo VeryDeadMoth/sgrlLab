@@ -36,8 +36,8 @@ public class RayCastMainCamera : MonoBehaviour
                     }
                     else if (interactibleObject.CompareTag("pipette"))
                     {
-                        MassCube massCube = hit.transform.gameObject.GetComponent<MassCube>();
-                        massCube.g += 50;
+                        /*MassCube massCube = hit.transform.gameObject.GetComponent<MassCube>();
+                        massCube.g += 50;*/
                         interactObjectBehavior.CallAnimPipette(hit.transform.gameObject);
                     }
                 }
