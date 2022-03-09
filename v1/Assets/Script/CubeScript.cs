@@ -8,7 +8,6 @@ public class CubeScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        poids = 50.2f;
     }
 
     // Update is called once per frame

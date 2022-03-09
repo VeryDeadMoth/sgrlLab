@@ -5,7 +5,10 @@ using TMPro;
 
 public class PlaceholderScript : MonoBehaviour
 {
-    public TMP_Text txt;
+    //public TMP_Text txt;
+    public GameObject balance;
+    float a=0;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,28 +21,36 @@ public class PlaceholderScript : MonoBehaviour
         
     }
 
+    public void resetA()
+    {
+        a = 0;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("InteractCube"))
+        if (balance.GetComponent<BalanceScript>().isOn)
         {
-            float a = other.gameObject.GetComponent<CubeScript>().poids;
-            if (a < 10)
+            if (other.gameObject.CompareTag("InteractCube"))
             {
-                txt.GetComponent<TMPro.TextMeshProUGUI>().text = "0"+a+"g";
+                a = other.gameObject.GetComponent<CubeScript>().poids;
+                balance.GetComponent<BalanceScript>().updatePoids(a);
+                //txt.text = balance.GetComponent<BalanceScript>().currentPoids + "g";
+                //Debug.Log(txt.text);
+                
+
             }
-            else
-            {
-                //txt.GetComponent<TMPro.TextMeshProUGUI>().text = a+"g";
-                txt.text= a + "g";
-                Debug.Log(txt.text);
-            }
-            
         }
         
     }
 
     private void OnTriggerExit(Collider other)
     {
-        txt.text = "00,0g";
+        if (balance.GetComponent<BalanceScript>().isOn)
+        {
+            balance.GetComponent<BalanceScript>().updatePoids(-a);
+            //txt.text = balance.GetComponent<BalanceScript>().currentPoids + "g";
+            
+        }
     }
+
 }
