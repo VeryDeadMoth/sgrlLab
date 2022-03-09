@@ -76,6 +76,7 @@ public class InteractObjectBehavior : MonoBehaviour
     public IEnumerator SmoothPos(GameObject targetToMove, Vector3 a, Vector3 b)
     {
         rayCastMainCamera.mouseActive = false;
+        
         for (float t = c; t <= 1; t += c)
         {
             targetToMove.transform.position = Vector3.Lerp(a, b, t);
@@ -97,27 +98,39 @@ public class InteractObjectBehavior : MonoBehaviour
     public IEnumerator AnimPipette(GameObject ObjectIClicked)
     {
         rayCastMainCamera.mouseActive = false;
-        Vector3 a = new Vector3(1f, -0.6f, -8f);
-        Vector3 b = new Vector3(ObjectIClicked.transform.position.x+0.5f, ObjectIClicked.transform.position.y+1, ObjectIClicked.transform.position.z) ;
-        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
-        
-        yield return new WaitForSeconds(0.1f);
 
-        Quaternion r = new Quaternion(0.0f, 0.0f, 0.0f, cubeIHold.transform.rotation.w);
-        Quaternion s = new Quaternion(cubeIHold.transform.rotation.x + 0.25f, cubeIHold.transform.rotation.y-0.25f , cubeIHold.transform.rotation.z + 0.25f, cubeIHold.transform.rotation.w);
-        for (float t = c; t <= 1; t += c)
-        {
-            cubeIHold.transform.rotation = Quaternion.Lerp(r, s, t);
-            yield return null;
-        }
-        yield return new WaitForSeconds(0.1f);
-        for (float t = c; t <= 1; t += c)
-        {
-            cubeIHold.transform.rotation = Quaternion.Lerp(s, r, t);
-            yield return null;
-        }
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(SmoothPosForFunc(cubeIHold, b, a));
+        //vas au dessus du becher
+        Vector3 a = new Vector3(1f, -0.6f, -8f);
+        Vector3 b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y+2, ObjectIClicked.transform.position.z) ; 
+        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+        yield return new WaitForSeconds(0.3f);
+
+        //vas dans le becher
+        a = b;
+        b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y +1.25f, ObjectIClicked.transform.position.z); 
+        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+        yield return new WaitForSeconds(0.3f);
+
+        //pipette s'enfonce
+        a = cubeIHold.transform.GetChild(0).position;
+        b = new Vector3(cubeIHold.transform.GetChild(0).position.x, cubeIHold.transform.GetChild(0).position.y -0.25f, cubeIHold.transform.GetChild(0).position.z);
+        StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, a, b));
+        yield return new WaitForSeconds(0.3f);
+
+        //pipette remonte
+        StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, b, a));
+        yield return new WaitForSeconds(0.3f);
+
+        //sors du becher
+        a = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 1.25f, ObjectIClicked.transform.position.z);
+        b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 2, ObjectIClicked.transform.position.z);
+        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+        yield return new WaitForSeconds(0.3f);
+
+        //revient dans la main
+        a = b;
+        b = new Vector3(1f, -0.6f, -8f);
+        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
         rayCastMainCamera.mouseActive = true;
     }
 }
