@@ -9,6 +9,7 @@ public class InteractObjectBehavior : MonoBehaviour
     public GameObject[] cubes;
     public GameObject cubeIHold;
     public RayCastMainCamera rayCastMainCamera;
+    public float c;
     void Start()
     {
 
@@ -21,7 +22,7 @@ public class InteractObjectBehavior : MonoBehaviour
 
     public void holdObject(GameObject ObjectIClicked)
     {
-        if ((ObjectIClicked.CompareTag("PlaceHolder") && isHeld) || !isHeld)
+        if ((ObjectIClicked.layer==6 && isHeld) || !isHeld)
         {
             
             isHeld = !isHeld;
@@ -74,8 +75,18 @@ public class InteractObjectBehavior : MonoBehaviour
 
     public IEnumerator SmoothPos(GameObject targetToMove, Vector3 a, Vector3 b)
     {
+        rayCastMainCamera.mouseActive = false;
+        for (float t = c; t <= 1; t += c)
+        {
+            targetToMove.transform.position = Vector3.Lerp(a, b, t);
+            yield return null;
+        }
+        rayCastMainCamera.mouseActive = true;
+    }
+    public IEnumerator SmoothPosForFunc(GameObject targetToMove, Vector3 a, Vector3 b)
+    {
         //rayCastMainCamera.mouseActive = false;
-        for (float t = 0.01f; t <= 1; t += 0.01f)
+        for (float t = c; t <= 1; t += c)
         {
             targetToMove.transform.position = Vector3.Lerp(a, b, t);
             yield return null;
@@ -88,25 +99,25 @@ public class InteractObjectBehavior : MonoBehaviour
         rayCastMainCamera.mouseActive = false;
         Vector3 a = new Vector3(1f, -0.6f, -8f);
         Vector3 b = new Vector3(ObjectIClicked.transform.position.x+0.5f, ObjectIClicked.transform.position.y+1, ObjectIClicked.transform.position.z) ;
-        StartCoroutine(SmoothPos(cubeIHold, a, b));
+        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
         
         yield return new WaitForSeconds(0.1f);
 
         Quaternion r = new Quaternion(0.0f, 0.0f, 0.0f, cubeIHold.transform.rotation.w);
         Quaternion s = new Quaternion(cubeIHold.transform.rotation.x + 0.25f, cubeIHold.transform.rotation.y-0.25f , cubeIHold.transform.rotation.z + 0.25f, cubeIHold.transform.rotation.w);
-        for (float t = 0.01f; t <= 1; t += 0.01f)
+        for (float t = c; t <= 1; t += c)
         {
             cubeIHold.transform.rotation = Quaternion.Lerp(r, s, t);
             yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        for (float t = 0.01f; t <= 1; t += 0.01f)
+        for (float t = c; t <= 1; t += c)
         {
             cubeIHold.transform.rotation = Quaternion.Lerp(s, r, t);
             yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        StartCoroutine(SmoothPos(cubeIHold, b, a));
+        StartCoroutine(SmoothPosForFunc(cubeIHold, b, a));
         rayCastMainCamera.mouseActive = true;
     }
 }

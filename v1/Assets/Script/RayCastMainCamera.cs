@@ -41,9 +41,21 @@ public class RayCastMainCamera : MonoBehaviour
                         interactObjectBehavior.CallAnimPipette(hit.transform.gameObject);
                     }
                 }
-                else if (hit.transform.gameObject.CompareTag("PlaceHolder"))
+                else if (hit.transform.gameObject.CompareTag("PlaceHolderBecher"))
                 {
-                    if (interactibleObject != null) {
+                    if (interactibleObject != null && interactibleObject.CompareTag("InteractCube"))
+                    {
+                        interactibleObject.layer = 0;
+                        //interactibleObject.transform.position = hit.transform.position;
+                        interactObjectBehavior.holdObject(hit.transform.gameObject);
+                        hit.transform.gameObject.SetActive(false);
+                        interactibleObject = null;
+                    }
+
+                }
+                else if (hit.transform.gameObject.CompareTag("PlaceHolderPipette"))
+                {
+                    if (interactibleObject != null && interactibleObject.CompareTag("pipette")) {
                         interactibleObject.layer = 0;
                         //interactibleObject.transform.position = hit.transform.position;
                         interactObjectBehavior.holdObject(hit.transform.gameObject);
