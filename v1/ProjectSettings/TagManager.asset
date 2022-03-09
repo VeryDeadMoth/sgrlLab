@@ -9,6 +9,7 @@ TagManager:
   - InteractCube
   - PlaceHolderPipette
   - PlaceHolderBecher
+  - balance
   layers:
   - Default
   - TransparentFX
