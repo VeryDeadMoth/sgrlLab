@@ -2063,7 +2063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f1e18209a11ae499ee687148dab24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 963194227}
   duration: 0.5
   down: {x: -0.44, y: 0.4, z: -7}
   up: {x: -1.4, y: -1.3, z: -7}
@@ -2410,7 +2410,7 @@ MonoBehaviour:
   - {fileID: 725331628}
   - {fileID: 1618395484}
   - {fileID: 796890926}
-  asset: {fileID: 0}
+  asset: {fileID: 4900000, guid: 599eb239ce0391e4cb848a6d63026a2d, type: 3}
 --- !u!4 &1828601337
 Transform:
   m_ObjectHideFlags: 0
