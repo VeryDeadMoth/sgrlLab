@@ -14,10 +14,11 @@ public class RayCastMainCamera : MonoBehaviour
 
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        hasHit = Physics.Raycast(ray, out hit);
-        if (Input.GetMouseButtonDown(0) && mouseActive)
+        
+        if (mouseActive && Input.GetMouseButtonDown(0))
         {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            hasHit = Physics.Raycast(ray, out hit);
             if (hasHit)
             {
                 Debug.Log(hit.transform.name);
