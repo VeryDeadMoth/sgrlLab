@@ -18,6 +18,7 @@ public class NeoRayCastMainCamera : MonoBehaviour
     float arr;
     bool isZoomedIn = false;
     public GameObject balance;
+    public GameObject placeholderBalance;
     Vector3 init;
 
 void Start(){
@@ -55,6 +56,13 @@ void Update()
                         //modify a by new weight
                         MassCube massCube = hit.transform.gameObject.GetComponent<MassCube>();
                         massCube.g += 50;
+                        if (balance.GetComponent<BalanceScript>().isOn)
+                        {
+                            balance.GetComponent<BalanceScript>().updatePoids(50);
+                            //pb here
+                            placeholderBalance.GetComponent<NeoPlaceholderScript>().a += massCube.g;
+                        }
+                        
                         interactObjectBehavior.CallAnimPipette(hit.transform.gameObject);
                     }
                 }

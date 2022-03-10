@@ -666,6 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balance: {fileID: 1504979988}
+  a: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1218,7 @@ MonoBehaviour:
   interactObjectBehavior: {fileID: 1262252315}
   mouseActive: 1
   balance: {fileID: 1504979988}
+  placeholderBalance: {fileID: 671020596}
 --- !u!1001 &1025474301
 PrefabInstance:
   m_ObjectHideFlags: 0

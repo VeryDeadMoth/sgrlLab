@@ -5,7 +5,7 @@ using UnityEngine;
 public class NeoPlaceholderScript : MonoBehaviour
 {
     public GameObject balance;
-    float a = 0;
+    public float a = 0;
 
     // Start is called before the first frame update
     void Start()
