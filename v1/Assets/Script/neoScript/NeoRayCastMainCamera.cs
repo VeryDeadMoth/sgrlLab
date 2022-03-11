@@ -21,6 +21,8 @@ public class NeoRayCastMainCamera : MonoBehaviour
     public GameObject placeholderBalance;
     Vector3 init;
 
+    public AudioSource audioS;
+
 void Start(){
         defaultZoom = Camera.main.fieldOfView;
         dep = defaultZoom;
@@ -41,6 +43,7 @@ void Update()
                 {
                     if (interactibleObject == null)
                     {
+                        audioS.Play();
                         interactibleObject = hit.transform.gameObject;
                         //Debug.Log("you can interact with me");
                         {
@@ -92,6 +95,7 @@ void Update()
                 }
                 else if (hit.transform.CompareTag("pipette") && interactibleObject == null)
                 {
+                    audioS.Play();
                     interactibleObject = hit.transform.gameObject;
                     interactObjectBehavior.holdObject(interactibleObject);
                     interactObjectBehavior.ReloadAllCubePlaceHolder();

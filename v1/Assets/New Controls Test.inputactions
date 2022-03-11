@@ -1,0 +1,51 @@
+{
+    "name": "New Controls Test",
+    "maps": [
+        {
+            "name": "test",
+            "id": "389983d3-edcd-4053-8889-691f172ed7d5",
+            "actions": [
+                {
+                    "name": "PourLiquid",
+                    "type": "Value",
+                    "id": "5e6edff1-4eee-479a-8303-022d41020377",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c8e2fae3-f834-40f1-8c5c-9bd3df94f0bd",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "PourLiquid",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard & Mouse",
+            "bindingGroup": "Keyboard & Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
