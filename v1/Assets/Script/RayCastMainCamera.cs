@@ -12,6 +12,10 @@ public class RayCastMainCamera : MonoBehaviour
     public InteractObjectBehavior interactObjectBehavior;
     public bool mouseActive = true;
 
+    public AudioSource audioSource;
+    public AudioClip amoi;
+    public AudioClip yeet;
+    public AudioClip aaah;
     void Update()
     {
         
@@ -29,17 +33,18 @@ public class RayCastMainCamera : MonoBehaviour
                     {
                         interactibleObject = hit.transform.gameObject;
                         //Debug.Log("you can interact with me");
-                        {
-                            interactObjectBehavior.holdObject(interactibleObject);
-                            interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
-                            interactibleObject.layer = 2;
-                        }
+                        audioSource.PlayOneShot(amoi);
+                        interactObjectBehavior.holdObject(interactibleObject);
+                        interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
+                        interactibleObject.layer = 2;
                     }
                     else if (interactibleObject.CompareTag("pipette"))
                     {
                         /*MassCube massCube = hit.transform.gameObject.GetComponent<MassCube>();
                         massCube.g += 50;*/
+
                         interactObjectBehavior.CallAnimPipette(hit.transform.gameObject);
+                        audioSource.PlayOneShot(aaah);
                     }
                 }
                 else if (hit.transform.gameObject.CompareTag("PlaceHolderBecher"))
@@ -67,6 +72,7 @@ public class RayCastMainCamera : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("pipette") && interactibleObject == null)
                 {
+                    audioSource.PlayOneShot(amoi);
                     interactibleObject = hit.transform.gameObject;
                     interactObjectBehavior.holdObject(interactibleObject);
                     interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
@@ -75,6 +81,7 @@ public class RayCastMainCamera : MonoBehaviour
                 {
                     if (interactibleObject.CompareTag("InteractCube"))
                     {
+                        audioSource.PlayOneShot(yeet);
                         AtributeCube massCube = interactibleObject.GetComponent<AtributeCube>();
                         massCube.g = 0;
                     }

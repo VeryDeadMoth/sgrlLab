@@ -5,8 +5,8 @@ using UnityEngine;
 public class InteractObjectBehavior : MonoBehaviour 
 {
     public bool isHeld = false;
-    public GameObject[] placeHolders;
-    public GameObject[] cubes;
+    //public GameObject[] placeHolders;
+    //public GameObject[] cubes;
     public GameObject cubeIHold;
     public GameObject cam;
     public RayCastMainCamera rayCastMainCamera; 
@@ -14,7 +14,10 @@ public class InteractObjectBehavior : MonoBehaviour
     public AnimationCurve animationCurve;
 
     private Vector3 baseCamPos;
-    
+
+
+    public AudioSource audioSource;
+    public AudioClip bEmpty;
     void Awake()
     {
         baseCamPos = cam.transform.position;
@@ -48,25 +51,7 @@ public class InteractObjectBehavior : MonoBehaviour
         }
         
     }
-    /*public void ReloadAllCubePlaceHolder()
-    {
-        foreach(GameObject placeHolder in placeHolders)
-        {
-            bool thereIsACube = false;
-            foreach(GameObject cube in cubes)
-            {
-                if (cube.transform.position == placeHolder.transform.position)
-                {
-                    thereIsACube = true;
-                }
-            }
-            if (!thereIsACube)
-            {
-                placeHolder.SetActive(true);
-            }
-            
-        }
-    }*/
+
 
     public void CallAnimPipette(GameObject ObjectIClicked)
     {
@@ -126,6 +111,7 @@ public class InteractObjectBehavior : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                audioSource.PlayOneShot(bEmpty);
                 Ray ray;
                 RaycastHit hit;
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);

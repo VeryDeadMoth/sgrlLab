@@ -18,9 +18,13 @@ public class ViderDansLaPoubelle : MonoBehaviour
             {
                 if (!tg.isOn)
                 {
-                    errorManager.Move();
-                    tgst = false;
-                    break;
+                    if (errorManager != null)
+                    {
+                        errorManager.Move();
+                        tgst = false;
+                        break;
+                    }
+                    
 
                 }
             }

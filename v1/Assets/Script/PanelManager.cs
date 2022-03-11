@@ -7,6 +7,8 @@ public class PanelManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject ActivPanel;
+    public AudioSource audioSource;
+    public AudioClip ooh;
 
     public void openMyPanel(GameObject myPanel)
     {
@@ -14,5 +16,9 @@ public class PanelManager : MonoBehaviour
         ActivPanel.SetActive(false);
         myPanel.SetActive(true);
         ActivPanel = myPanel;
+    }
+    public void TaskCompleted()
+    {
+        audioSource.PlayOneShot(ooh);
     }
 }
