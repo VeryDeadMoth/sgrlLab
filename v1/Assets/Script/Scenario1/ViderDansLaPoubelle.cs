@@ -11,7 +11,7 @@ public class ViderDansLaPoubelle : MonoBehaviour
 
     public void Update()
     {
-        if (gameObject.GetComponent<MassCube>().g == 0)
+        if (gameObject.GetComponent<AtributeCube>().g == 0)
         {
             bool tgst = true;
             foreach (Toggle tg in tgs)

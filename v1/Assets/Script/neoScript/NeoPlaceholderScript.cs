@@ -33,7 +33,7 @@ public class NeoPlaceholderScript : MonoBehaviour
             if (other.gameObject.CompareTag("InteractCube"))
             {
                 //Debug.Log("fuck off");
-                a = other.gameObject.GetComponent<MassCube>().g;
+                a = other.gameObject.GetComponent<AtributeCube>().g;
                 balance.GetComponent<BalanceScript>().updatePoids(a);
                 //txt.text = balance.GetComponent<BalanceScript>().currentPoids + "g";
                 //Debug.Log(txt.text);

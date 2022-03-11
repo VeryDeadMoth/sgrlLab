@@ -54,7 +54,7 @@ void Update()
                         //CHGMENT MASS CUBE
                         //get placeholder in public val
                         //modify a by new weight
-                        MassCube massCube = hit.transform.gameObject.GetComponent<MassCube>();
+                        AtributeCube massCube = hit.transform.gameObject.GetComponent<AtributeCube>();
                         massCube.g += 50;
                         if (balance.GetComponent<BalanceScript>().isOn)
                         {
@@ -100,7 +100,7 @@ void Update()
                 {
                     if (interactibleObject.CompareTag("InteractCube"))
                     {
-                        MassCube massCube = interactibleObject.GetComponent<MassCube>();
+                        AtributeCube massCube = interactibleObject.GetComponent<AtributeCube>();
                         massCube.g = 0;
                     }
                 }

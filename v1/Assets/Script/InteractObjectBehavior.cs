@@ -48,7 +48,7 @@ public class InteractObjectBehavior : MonoBehaviour
         }
         
     }
-    public void ReloadAllCubePlaceHolder()
+    /*public void ReloadAllCubePlaceHolder()
     {
         foreach(GameObject placeHolder in placeHolders)
         {
@@ -66,7 +66,7 @@ public class InteractObjectBehavior : MonoBehaviour
             }
             
         }
-    }
+    }*/
 
     public void CallAnimPipette(GameObject ObjectIClicked)
     {
@@ -138,7 +138,7 @@ public class InteractObjectBehavior : MonoBehaviour
                     StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, a, b));
                     yield return new WaitForSeconds(animationDuration);
                     //masse s'ajoute
-                    MassCube massCube = ObjectIClicked.GetComponent<MassCube>();
+                    AtributeCube massCube = ObjectIClicked.GetComponent<AtributeCube>();
                     massCube.g += 50;
                     //pipette remonte
                     StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, b, a));

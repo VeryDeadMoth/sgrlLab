@@ -12,7 +12,7 @@ public class remplireErlen : MonoBehaviour
 
     public void Update()
     {
-        if (gameObject.GetComponent<MassCube>().g == 200)
+        if (gameObject.GetComponent<AtributeCube>().g == 200)
         {
             bool tgst = true;
             foreach (Toggle tg in tgs)

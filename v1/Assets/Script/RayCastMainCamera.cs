@@ -31,7 +31,7 @@ public class RayCastMainCamera : MonoBehaviour
                         //Debug.Log("you can interact with me");
                         {
                             interactObjectBehavior.holdObject(interactibleObject);
-                            interactObjectBehavior.ReloadAllCubePlaceHolder();
+                            interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
                             interactibleObject.layer = 2;
                         }
                     }
@@ -49,7 +49,7 @@ public class RayCastMainCamera : MonoBehaviour
                         interactibleObject.layer = 0;
                         //interactibleObject.transform.position = hit.transform.position;
                         interactObjectBehavior.holdObject(hit.transform.gameObject);
-                        hit.transform.gameObject.SetActive(false);
+                        interactibleObject.GetComponent<AtributeCube>().HidePlaceHolder(hit.transform.gameObject);
                         interactibleObject = null;
                     }
 
@@ -60,7 +60,7 @@ public class RayCastMainCamera : MonoBehaviour
                         interactibleObject.layer = 0;
                         //interactibleObject.transform.position = hit.transform.position;
                         interactObjectBehavior.holdObject(hit.transform.gameObject);
-                        hit.transform.gameObject.SetActive(false);
+                        interactibleObject.GetComponent<AtributeCube>().HidePlaceHolder(hit.transform.gameObject);
                         interactibleObject = null;
                     }
                     
@@ -69,20 +69,18 @@ public class RayCastMainCamera : MonoBehaviour
                 {
                     interactibleObject = hit.transform.gameObject;
                     interactObjectBehavior.holdObject(interactibleObject);
-                    interactObjectBehavior.ReloadAllCubePlaceHolder();
+                    interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
                 }
                 else if (hit.transform.CompareTag("bin"))
                 {
                     if (interactibleObject.CompareTag("InteractCube"))
                     {
-                        MassCube massCube = interactibleObject.GetComponent<MassCube>();
+                        AtributeCube massCube = interactibleObject.GetComponent<AtributeCube>();
                         massCube.g = 0;
                     }
                 }
             }
         }
-
-
     }
 }
 
