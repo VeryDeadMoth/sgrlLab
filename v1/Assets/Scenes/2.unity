@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: c00eb0859e5bf0d47a8769b52de95489, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -296,9 +296,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 589975521}
-        m_TargetAssemblyTypeName: Scene, Assembly-CSharp
-        m_MethodName: nextScene
+      - m_Target: {fileID: 96576883}
+        m_TargetAssemblyTypeName: MouseMove, Assembly-CSharp
+        m_MethodName: aa
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

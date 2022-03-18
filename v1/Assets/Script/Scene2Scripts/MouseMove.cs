@@ -20,8 +20,11 @@ public class MouseMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(mousePos);
-        transform.position = mousePos;
+        transform.position = Input.mousePosition;
+    }
+
+    public void aa()
+    {
+        Debug.Log("aa");
     }
 }
