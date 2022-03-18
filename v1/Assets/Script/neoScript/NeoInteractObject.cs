@@ -84,10 +84,11 @@ public class NeoInteractObject : MonoBehaviour
 
     public IEnumerator AnimPipette(GameObject ObjectIClicked)
     {
+        Vector3 baseObjectIHoldPosition = cubeIHold.transform.position;
         baseCamPos = cam.transform.position;
         rayCastMainCamera.mouseActive = false;
         //vas au dessus du becher
-        Vector3 a = new Vector3(1f, -0.6f, -8f);
+        Vector3 a = baseObjectIHoldPosition;
         Vector3 b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 2, ObjectIClicked.transform.position.z);
         StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
         yield return new WaitForSeconds(animationDuration);
