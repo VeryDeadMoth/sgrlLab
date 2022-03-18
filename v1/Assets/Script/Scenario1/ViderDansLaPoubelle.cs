@@ -21,10 +21,10 @@ public class ViderDansLaPoubelle : MonoBehaviour
                     if (errorManager != null)
                     {
                         errorManager.Move();
-                        tgst = false;
-                        break;
+                        
                     }
-                    
+                    tgst = false;
+                    break;
 
                 }
             }

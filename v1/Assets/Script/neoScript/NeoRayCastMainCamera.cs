@@ -23,13 +23,13 @@ public class NeoRayCastMainCamera : MonoBehaviour
 
     public AudioSource audioS;
 
-void Start(){
+    void Start(){
         defaultZoom = Camera.main.fieldOfView;
         dep = defaultZoom;
         arr = dep / 1.5f;
     }
 
-void Update()
+    void Update()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         hasHit = Physics.Raycast(ray, out hit);
@@ -46,11 +46,9 @@ void Update()
                         audioS.Play();
                         interactibleObject = hit.transform.gameObject;
                         //Debug.Log("you can interact with me");
-                        {
-                            interactObjectBehavior.holdObject(interactibleObject);
-                            interactObjectBehavior.ReloadAllCubePlaceHolder();
-                            interactibleObject.layer = 2;
-                        }
+                        interactObjectBehavior.holdObject(interactibleObject);
+                        interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
+                        interactibleObject.layer = 2;
                     }
                     else if (interactibleObject.CompareTag("pipette"))
                     {
@@ -76,7 +74,7 @@ void Update()
                         interactibleObject.layer = 0;
                         //interactibleObject.transform.position = hit.transform.position;
                         interactObjectBehavior.holdObject(hit.transform.gameObject);
-                        hit.transform.gameObject.SetActive(false);
+                        interactibleObject.GetComponent<AtributeCube>().HidePlaceHolder(hit.transform.gameObject);
                         interactibleObject = null;
                     }
 
@@ -88,7 +86,7 @@ void Update()
                         interactibleObject.layer = 0;
                         //interactibleObject.transform.position = hit.transform.position;
                         interactObjectBehavior.holdObject(hit.transform.gameObject);
-                        hit.transform.gameObject.SetActive(false);
+                        interactibleObject.GetComponent<AtributeCube>().HidePlaceHolder(hit.transform.gameObject);
                         interactibleObject = null;
                     }
 
@@ -98,7 +96,7 @@ void Update()
                     audioS.Play();
                     interactibleObject = hit.transform.gameObject;
                     interactObjectBehavior.holdObject(interactibleObject);
-                    interactObjectBehavior.ReloadAllCubePlaceHolder();
+                    interactibleObject.GetComponent<AtributeCube>().ShowPlaceHolder();
                 }
                 else if (hit.transform.CompareTag("bin"))
                 {

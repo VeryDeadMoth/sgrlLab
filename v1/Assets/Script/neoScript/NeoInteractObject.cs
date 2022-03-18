@@ -7,17 +7,17 @@ public class NeoInteractObject : MonoBehaviour
     public bool isHeld = false;
     public GameObject[] placeHolders;
     public GameObject[] cubes;
+    public GameObject cam;
     public GameObject cubeIHold;
     public NeoRayCastMainCamera rayCastMainCamera;
+    public float animationDuration = 2.0f;
+    public AnimationCurve animationCurve;
     public float c;
-    void Start()
+
+    private Vector3 baseCamPos;
+    void Awake()
     {
-
-    }
-
-    void Update()
-    {
-
+        baseCamPos = cam.transform.position;
     }
 
     public void holdObject(GameObject ObjectIClicked)
@@ -47,26 +47,6 @@ public class NeoInteractObject : MonoBehaviour
         }
 
     }
-    public void ReloadAllCubePlaceHolder()
-    {
-        foreach (GameObject placeHolder in placeHolders)
-        {
-            bool thereIsACube = false;
-            foreach (GameObject cube in cubes)
-            {
-                if (cube.transform.position == placeHolder.transform.position)
-                {
-                    thereIsACube = true;
-                }
-            }
-            if (!thereIsACube)
-            {
-                placeHolder.SetActive(true);
-            }
-
-        }
-    }
-
     public void CallAnimPipette(GameObject ObjectIClicked)
     {
         StopAllCoroutines();
@@ -76,48 +56,118 @@ public class NeoInteractObject : MonoBehaviour
     public IEnumerator SmoothPos(GameObject targetToMove, Vector3 a, Vector3 b)
     {
         rayCastMainCamera.mouseActive = false;
-        for (float t = c; t <= 1; t += c)
+
+        float startTime = Time.realtimeSinceStartup;
+        float currentTimePercentage = (animationDuration > 0.0f) ? ((Time.realtimeSinceStartup - startTime) / animationDuration) : (1.0f);
+        while (currentTimePercentage <= 1.0f)
         {
-            targetToMove.transform.position = Vector3.Lerp(a, b, t);
+            targetToMove.transform.position = Vector3.Lerp(a, b, animationCurve.Evaluate(currentTimePercentage));
             yield return null;
+            currentTimePercentage = (animationDuration > 0.0f) ? ((Time.realtimeSinceStartup - startTime) / animationDuration) : (1.0f);
         }
+
         rayCastMainCamera.mouseActive = true;
     }
     public IEnumerator SmoothPosForFunc(GameObject targetToMove, Vector3 a, Vector3 b)
     {
-        //rayCastMainCamera.mouseActive = false;
-        for (float t = c; t <= 1; t += c)
+        float startTime = Time.realtimeSinceStartup;
+        float currentTimePercentage = (animationDuration > 0.0f) ? ((Time.realtimeSinceStartup - startTime) / animationDuration) : (1.0f);
+        while (currentTimePercentage <= 1.0f)
         {
-            targetToMove.transform.position = Vector3.Lerp(a, b, t);
+            targetToMove.transform.position = Vector3.Lerp(a, b, animationCurve.Evaluate(currentTimePercentage));
             yield return null;
+            currentTimePercentage = (animationDuration > 0.0f) ? ((Time.realtimeSinceStartup - startTime) / animationDuration) : (1.0f);
         }
-        //rayCastMainCamera.mouseActive = true;
     }
 
     public IEnumerator AnimPipette(GameObject ObjectIClicked)
     {
         rayCastMainCamera.mouseActive = false;
+        //vas au dessus du becher
         Vector3 a = new Vector3(1f, -0.6f, -8f);
-        Vector3 b = new Vector3(ObjectIClicked.transform.position.x + 0.5f, ObjectIClicked.transform.position.y + 1, ObjectIClicked.transform.position.z);
+        Vector3 b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 2, ObjectIClicked.transform.position.z);
         StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+        yield return new WaitForSeconds(animationDuration);
 
-        yield return new WaitForSeconds(0.1f);
+        //vas dans le becher
+        a = b;
+        b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 1.25f, ObjectIClicked.transform.position.z);
+        StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+        yield return new WaitForSeconds(animationDuration);
 
-        Quaternion r = new Quaternion(0.0f, 0.0f, 0.0f, cubeIHold.transform.rotation.w);
-        Quaternion s = new Quaternion(cubeIHold.transform.rotation.x + 0.25f, cubeIHold.transform.rotation.y - 0.25f, cubeIHold.transform.rotation.z + 0.25f, cubeIHold.transform.rotation.w);
-        for (float t = c; t <= 1; t += c)
+        //zoom
+        a = cam.transform.position;
+        b = new Vector3(cubeIHold.transform.GetChild(0).position.x, cubeIHold.transform.GetChild(0).position.y, cubeIHold.transform.GetChild(0).position.z - 2);
+        StartCoroutine(SmoothPosForFunc(cam, a, b));
+        yield return new WaitForSeconds(animationDuration);
+
+        while (true)
         {
-            cubeIHold.transform.rotation = Quaternion.Lerp(r, s, t);
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray;
+                RaycastHit hit;
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                bool hasHit = Physics.Raycast(ray, out hit);
+                if (hasHit)
+                {
+                    //pipette s'enfonce
+                    a = cubeIHold.transform.GetChild(0).position;
+                    b = new Vector3(cubeIHold.transform.GetChild(0).position.x, cubeIHold.transform.GetChild(0).position.y - 0.25f, cubeIHold.transform.GetChild(0).position.z);
+                    StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, a, b));
+                    yield return new WaitForSeconds(animationDuration);
+                    //masse s'ajoute
+                    AtributeCube massCube = ObjectIClicked.GetComponent<AtributeCube>();
+                    massCube.g += 50;
+                    //pipette remonte
+                    StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, b, a));
+                    yield return new WaitForSeconds(animationDuration);
+
+                    //dezoom
+                    a = cam.transform.position;
+                    b = baseCamPos;
+                    StartCoroutine(SmoothPosForFunc(cam, a, b));
+                    yield return new WaitForSeconds(animationDuration);
+
+                    //sors du becher
+                    a = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 1.25f, ObjectIClicked.transform.position.z);
+                    b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 2, ObjectIClicked.transform.position.z);
+                    StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+                    yield return new WaitForSeconds(animationDuration);
+
+                    //revient dans la main
+                    a = b;
+                    b = new Vector3(1f, -0.6f, -8f);
+                    StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+                    rayCastMainCamera.mouseActive = true;
+
+
+                }
+                else
+                {
+
+                    //dezoom
+                    a = cam.transform.position;
+                    b = baseCamPos;
+                    StartCoroutine(SmoothPosForFunc(cam, a, b));
+                    yield return new WaitForSeconds(0.3f);
+
+                    //sors du becher
+                    a = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 1.25f, ObjectIClicked.transform.position.z);
+                    b = new Vector3(ObjectIClicked.transform.position.x, ObjectIClicked.transform.position.y + 2, ObjectIClicked.transform.position.z);
+                    StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+                    yield return new WaitForSeconds(0.3f);
+
+                    //revient dans la main
+                    a = b;
+                    b = new Vector3(1f, -0.6f, -8f);
+                    StartCoroutine(SmoothPosForFunc(cubeIHold, a, b));
+                    rayCastMainCamera.mouseActive = true;
+                }
+                yield break;
+            }
             yield return null;
         }
-        yield return new WaitForSeconds(0.1f);
-        for (float t = c; t <= 1; t += c)
-        {
-            cubeIHold.transform.rotation = Quaternion.Lerp(s, r, t);
-            yield return null;
-        }
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(SmoothPosForFunc(cubeIHold, b, a));
-        rayCastMainCamera.mouseActive = true;
+
     }
 }
