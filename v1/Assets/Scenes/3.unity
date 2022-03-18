@@ -1731,6 +1731,8 @@ MonoBehaviour:
   - {fileID: 1928238764}
   cam: {fileID: 963194225}
   cubeIHold: {fileID: 0}
+  balance: {fileID: 1504979988}
+  placeholderBalance: {fileID: 671020596}
   rayCastMainCamera: {fileID: 963194229}
   animationDuration: 0.5
   animationCurve:

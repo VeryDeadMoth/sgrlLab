@@ -55,14 +55,8 @@ public class NeoRayCastMainCamera : MonoBehaviour
                         //CHGMENT MASS CUBE
                         //get placeholder in public val
                         //modify a by new weight
-                        AtributeCube massCube = hit.transform.gameObject.GetComponent<AtributeCube>();
-                        massCube.g += 50;
-                        if (balance.GetComponent<BalanceScript>().isOn)
-                        {
-                            balance.GetComponent<BalanceScript>().updatePoids(50);
-                            //pb here
-                            placeholderBalance.GetComponent<NeoPlaceholderScript>().a += massCube.g;
-                        }
+                        
+                        
                         
                         interactObjectBehavior.CallAnimPipette(hit.transform.gameObject);
                     }

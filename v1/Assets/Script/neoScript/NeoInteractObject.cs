@@ -9,6 +9,8 @@ public class NeoInteractObject : MonoBehaviour
     public GameObject[] cubes;
     public GameObject cam;
     public GameObject cubeIHold;
+    public GameObject balance;
+    public GameObject placeholderBalance;
     public NeoRayCastMainCamera rayCastMainCamera;
     public float animationDuration = 2.0f;
     public AnimationCurve animationCurve;
@@ -82,6 +84,7 @@ public class NeoInteractObject : MonoBehaviour
 
     public IEnumerator AnimPipette(GameObject ObjectIClicked)
     {
+        baseCamPos = cam.transform.position;
         rayCastMainCamera.mouseActive = false;
         //vas au dessus du becher
         Vector3 a = new Vector3(1f, -0.6f, -8f);
@@ -112,12 +115,18 @@ public class NeoInteractObject : MonoBehaviour
                 if (hasHit)
                 {
                     //pipette s'enfonce
+                    AtributeCube massCube = ObjectIClicked.GetComponent<AtributeCube>();
+                    if (balance.GetComponent<BalanceScript>().isOn)
+                    {
+                        balance.GetComponent<BalanceScript>().updatePoids(50); //poids affiché par la balance s'actualise
+                        placeholderBalance.GetComponent<NeoPlaceholderScript>().a += massCube.g;
+                    }
                     a = cubeIHold.transform.GetChild(0).position;
                     b = new Vector3(cubeIHold.transform.GetChild(0).position.x, cubeIHold.transform.GetChild(0).position.y - 0.25f, cubeIHold.transform.GetChild(0).position.z);
                     StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, a, b));
                     yield return new WaitForSeconds(animationDuration);
                     //masse s'ajoute
-                    AtributeCube massCube = ObjectIClicked.GetComponent<AtributeCube>();
+                    
                     massCube.g += 50;
                     //pipette remonte
                     StartCoroutine(SmoothPosForFunc(cubeIHold.transform.GetChild(0).gameObject, b, a));
