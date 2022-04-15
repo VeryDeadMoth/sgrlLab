@@ -10,6 +10,9 @@ TagManager:
   - PlaceHolderPipette
   - PlaceHolderBecher
   - balance
+  - tab
+  - interactible
+  - Spin
   layers:
   - Default
   - TransparentFX

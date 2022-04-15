@@ -11,6 +11,8 @@ public class RayCastMainCamera : MonoBehaviour
     public GameObject interactibleObject;
     public InteractObjectBehavior interactObjectBehavior;
     public bool mouseActive = true;
+    public SpinSquare spinSquare;
+    public GameObject spin;
 
     public AudioSource audioSource;
     public AudioClip amoi;
@@ -32,6 +34,8 @@ public class RayCastMainCamera : MonoBehaviour
                     if(interactibleObject == null)
                     {
                         interactibleObject = hit.transform.gameObject;
+                        spin.SetActive(true);
+                        spinSquare.fiole = interactibleObject;
                         //Debug.Log("you can interact with me");
                         audioSource.PlayOneShot(amoi);
                         interactObjectBehavior.holdObject(interactibleObject);
@@ -51,6 +55,8 @@ public class RayCastMainCamera : MonoBehaviour
                 {
                     if (interactibleObject != null && interactibleObject.CompareTag("InteractCube"))
                     {
+                        spin.SetActive(false);
+                        spinSquare.fiole = null;
                         interactibleObject.layer = 0;
                         //interactibleObject.transform.position = hit.transform.position;
                         interactObjectBehavior.holdObject(hit.transform.gameObject);
